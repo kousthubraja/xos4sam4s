@@ -56,4 +56,13 @@
 /** Enable SD MMC interface pins through HSMCI */
 #define CONF_BOARD_SD_MMC_HSMCI
 
+/* Indicates board has an AAT3155 external component to control LCD backlight */
+#define CONF_BOARD_AAT3155
+
+/* Indicates board has an ILI9325 external component to control LCD */
+#define CONF_BOARD_ILI9325
+
 #endif /* CONF_BOARD_H_INCLUDED */
+
+
+s

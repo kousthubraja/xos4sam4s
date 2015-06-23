@@ -59,6 +59,12 @@
 // From module: Delay routines
 #include <delay.h>
 
+// From module: Display - AAT31XX Backlight Controller
+#include <aat31xx.h>
+
+// From module: Display - ILI9325 LCD Controller
+#include <ili9325.h>
+
 // From module: FatFS file system
 #include <diskio.h>
 #include <ff.h>
@@ -99,14 +105,11 @@
 // From module: RTC - Real Time Clock
 #include <rtc.h>
 
-// From module: SAM4S-EK2 LED support enabled
-#include <led.h>
-
-// From module: SD/MMC stack + Memory Control Access (aka ctrl_access, required for file system or USB)
-#include <sd_mmc_mem.h>
-
 // From module: SD/MMC stack on Multimedia Card interface
 #include <sd_mmc.h>
+
+// From module: SMC - Static Memory Controller
+#include <smc.h>
 
 // From module: Standard serial I/O (stdio) - SAM implementation
 #include <stdio_serial.h>
