@@ -74,11 +74,31 @@
 #include "conf_example.h"
 #include <string.h>
 #include "stdio_serial.h"
+#include "conf_uart_serial.h"
 #include "conf_board.h"
 #include "conf_clock.h"
+#include "smc.h"
 
 /* Chip select number to be set */
-#define ILI9325_LCD_CS      1
+#define ILI93XX_LCD_CS      1
+
+struct ili93xx_opt_t g_ili93xx_display_opt;
+
+/**
+ *  Configure UART console.
+ */
+static void configure_console(void)
+{
+	const usart_serial_options_t uart_serial_options = {
+		.baudrate = CONF_UART_BAUDRATE,
+		.paritytype = CONF_UART_PARITY
+	};
+
+	/** Configure console UART. */
+	sysclk_enable_peripheral_clock(CONSOLE_UART_ID);
+	stdio_serial_init(CONF_UART, &uart_serial_options);
+}
+
 
 /**
  * \brief Application entry point.
@@ -110,67 +130,68 @@ int main(void)
 	/* Initialize SD MMC stack */
 	sd_mmc_init();
 	
-	/* Initialize debug console */
+	/** Initialize debug console */
 	configure_console();
-	
-	/* Enable peripheral clock */
+
+	/** Enable peripheral clock */
 	pmc_enable_periph_clk(ID_SMC);
 
-	/* Configure SMC interface for Lcd */
-	smc_set_setup_timing(SMC,ILI9325_LCD_CS,SMC_SETUP_NWE_SETUP(2)
+	/** Configure SMC interface for Lcd */
+	smc_set_setup_timing(SMC, ILI93XX_LCD_CS, SMC_SETUP_NWE_SETUP(2)
 	| SMC_SETUP_NCS_WR_SETUP(2)
 	| SMC_SETUP_NRD_SETUP(2)
 	| SMC_SETUP_NCS_RD_SETUP(2));
-	smc_set_pulse_timing(SMC, ILI9325_LCD_CS , SMC_PULSE_NWE_PULSE(4)
+	smc_set_pulse_timing(SMC, ILI93XX_LCD_CS, SMC_PULSE_NWE_PULSE(4)
 	| SMC_PULSE_NCS_WR_PULSE(4)
 	| SMC_PULSE_NRD_PULSE(10)
 	| SMC_PULSE_NCS_RD_PULSE(10));
-	smc_set_cycle_timing(SMC, ILI9325_LCD_CS, SMC_CYCLE_NWE_CYCLE(10)
+	smc_set_cycle_timing(SMC, ILI93XX_LCD_CS, SMC_CYCLE_NWE_CYCLE(10)
 	| SMC_CYCLE_NRD_CYCLE(22));
-	#if !defined(SAM4S)
-	smc_set_mode(SMC, ILI9325_LCD_CS, SMC_MODE_READ_MODE
+	#if ((!defined(SAM4S)) && (!defined(SAM4E)))
+	smc_set_mode(SMC, ILI93XX_LCD_CS, SMC_MODE_READ_MODE
 	| SMC_MODE_WRITE_MODE
 	| SMC_MODE_DBW_8_BIT);
 	#else
-	smc_set_mode(SMC, ILI9325_LCD_CS, SMC_MODE_READ_MODE
+	smc_set_mode(SMC, ILI93XX_LCD_CS, SMC_MODE_READ_MODE
 	| SMC_MODE_WRITE_MODE);
 	#endif
-	/* Initialize display parameter */
-	g_ili9325_display_opt.ul_width = ILI9325_LCD_WIDTH;
-	g_ili9325_display_opt.ul_height = ILI9325_LCD_HEIGHT;
-	g_ili9325_display_opt.foreground_color = COLOR_BLACK;
-	g_ili9325_display_opt.background_color = COLOR_WHITE;
+	/** Initialize display parameter */
+	g_ili93xx_display_opt.ul_width = ILI93XX_LCD_WIDTH;
+	g_ili93xx_display_opt.ul_height = ILI93XX_LCD_HEIGHT;
+	g_ili93xx_display_opt.foreground_color = COLOR_BLACK;
+	g_ili93xx_display_opt.background_color = COLOR_WHITE;
 
-	/* Switch off backlight */
+	/** Switch off backlight */
 	aat31xx_disable_backlight();
 
-	/* Initialize LCD */
-	ili9325_init(&g_ili9325_display_opt);
+	/** Initialize LCD */
+	ili93xx_init(&g_ili93xx_display_opt);
 
-	/* Set backlight level */
+	/** Set backlight level */
 	aat31xx_set_backlight(AAT31XX_AVG_BACKLIGHT_LEVEL);
 
-	ili9325_set_foreground_color(COLOR_WHITE);
-	ili9325_draw_filled_rectangle(0, 0, ILI9325_LCD_WIDTH, ILI9325_LCD_HEIGHT);
+	ili93xx_set_foreground_color(COLOR_WHITE);
+	ili93xx_draw_filled_rectangle(0, 0, ILI93XX_LCD_WIDTH,
+	ILI93XX_LCD_HEIGHT);
+	/** Turn on LCD */
+	ili93xx_display_on();
+	ili93xx_set_cursor_position(0, 0);
 
-	/* Turn on LCD */
-	ili9325_display_on();
-	
-	uint8_t *mystring = "hello world!";
-	
-	/* Draw text, image and basic shapes on the LCD */
-	ili9325_set_foreground_color(COLOR_BLACK);
-	//ili9325_draw_string(10, 20, (uint8_t *)"hello world!");
-	ili9325_draw_string(10, 20, mystring);
-	ili9325_set_foreground_color(COLOR_RED);
-	ili9325_draw_circle(60, 160, 40);
-	ili9325_set_foreground_color(COLOR_GREEN);
-	ili9325_draw_circle(120, 160, 40);
-	ili9325_set_foreground_color(COLOR_BLUE);
-	ili9325_draw_circle(180, 160, 40);
+	/* Draw text, image and basic shapes on the LCD 
+	ili93xx_set_foreground_color(COLOR_BLACK);
+	ili93xx_draw_string(10, 20, (uint8_t *)"ili93xx_lcd example");
 
-	ili9325_set_foreground_color(COLOR_VIOLET);
-	ili9325_draw_line(0, 0, 240, 320);
+	ili93xx_set_foreground_color(COLOR_RED);
+	ili93xx_draw_circle(60, 160, 40);
+	ili93xx_set_foreground_color(COLOR_GREEN);
+	ili93xx_draw_circle(120, 160, 40);
+	ili93xx_set_foreground_color(COLOR_BLUE);
+	ili93xx_draw_circle(180, 160, 40);
+
+	ili93xx_set_foreground_color(COLOR_VIOLET);
+	ili93xx_draw_line(0, 0, 240, 320); */
+
+	
 
 	printf("\x0C\n\r-- SD/MMC/SDIO Card Example on FatFs --\n\r");
 	printf("-- Compiled: %s %s --\n\r", __DATE__, __TIME__);
@@ -217,6 +238,9 @@ int main(void)
 		printf("[OK]\r\n");
 		f_close(&file_object);
 		printf("Test is successful.\n\r");
+		
+		ili93xx_set_foreground_color(COLOR_BLACK);
+		ili93xx_draw_string(10, 20, (uint8_t *)"success");
 
 main_end_of_test:
 		printf("Please unplug the card.\n\r");
