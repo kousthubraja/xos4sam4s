@@ -84,6 +84,8 @@
 
 struct ili93xx_opt_t g_ili93xx_display_opt;
 
+
+
 /**
  *  Configure UART console.
  */
@@ -107,6 +109,7 @@ static void configure_console(void)
  */
 int main(void)
 {
+	
 	char test_file_name[] = "0:sd_mmc_test.txt";
 	Ctrl_status status;
 	FRESULT res;
@@ -190,7 +193,14 @@ int main(void)
 
 	ili93xx_set_foreground_color(COLOR_VIOLET);
 	ili93xx_draw_line(0, 0, 240, 320); */
+	
+	/* Output example information */
+	printf("-- NAND Flash Raw Example --\n\r");
+	printf("-- %s\n\r", BOARD_NAME);
+	printf("-- Compiled: %s %s --\n\r", __DATE__, __TIME__);
 
+	ili93xx_set_foreground_color(COLOR_BLACK);
+	ili93xx_draw_string(10,70,(uint8_t *)"success");
 	
 
 	printf("\x0C\n\r-- SD/MMC/SDIO Card Example on FatFs --\n\r");
@@ -222,7 +232,7 @@ int main(void)
 		test_file_name[0] = LUN_ID_SD_MMC_0_MEM + '0';
 		res = f_open(&file_object,
 				(char const *)test_file_name,
-				FA_CREATE_ALWAYS | FA_WRITE);
+				FA_READ);
 		if (res != FR_OK) {
 			printf("[FAIL] res %d\r\n", res);
 			goto main_end_of_test;
@@ -238,9 +248,12 @@ int main(void)
 		printf("[OK]\r\n");
 		f_close(&file_object);
 		printf("Test is successful.\n\r");
+
 		
 		ili93xx_set_foreground_color(COLOR_BLACK);
-		ili93xx_draw_string(10, 20, (uint8_t *)"success");
+		
+		
+		ili93xx_draw_string(10, 50, (uint8_t *)"success");
 
 main_end_of_test:
 		printf("Please unplug the card.\n\r");

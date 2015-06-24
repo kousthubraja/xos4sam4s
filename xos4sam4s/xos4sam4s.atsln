@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Atmel Studio Solution File, Format Version 11.00
 Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "SD_MMC_EXAMPLE21", "SD_MMC_EXAMPLE21\SD_MMC_EXAMPLE21.cproj", "{B65D330B-D760-47AD-AB78-7A6DCEA3101D}"
 EndProject
-Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "ILI93XX_EXAMPLE2", "ILI93XX_EXAMPLE2\ILI93XX_EXAMPLE2.cproj", "{0FFB7BCF-8F05-4893-9CAD-333EE2F448BC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -15,10 +13,6 @@ Global
 		{B65D330B-D760-47AD-AB78-7A6DCEA3101D}.Debug|ARM.Build.0 = Debug|ARM
 		{B65D330B-D760-47AD-AB78-7A6DCEA3101D}.Release|ARM.ActiveCfg = Release|ARM
 		{B65D330B-D760-47AD-AB78-7A6DCEA3101D}.Release|ARM.Build.0 = Release|ARM
-		{0FFB7BCF-8F05-4893-9CAD-333EE2F448BC}.Debug|ARM.ActiveCfg = Debug|ARM
-		{0FFB7BCF-8F05-4893-9CAD-333EE2F448BC}.Debug|ARM.Build.0 = Debug|ARM
-		{0FFB7BCF-8F05-4893-9CAD-333EE2F448BC}.Release|ARM.ActiveCfg = Release|ARM
-		{0FFB7BCF-8F05-4893-9CAD-333EE2F448BC}.Release|ARM.Build.0 = Release|ARM
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

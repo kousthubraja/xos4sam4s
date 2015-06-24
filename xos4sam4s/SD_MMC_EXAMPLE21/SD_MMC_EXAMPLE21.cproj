@@ -20,11 +20,11 @@
     <OverrideVtor>false</OverrideVtor>
     <CacheFlash>true</CacheFlash>
     <ProgFlashFromRam>true</ProgFlashFromRam>
-    <RamSnippetAddress />
+    <RamSnippetAddress>0x20000000</RamSnippetAddress>
     <UncachedRange />
-    <OverrideVtorValue />
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
     <BootSegment>2</BootSegment>
-    <eraseonlaunchrule>1</eraseonlaunchrule>
+    <eraseonlaunchrule>0</eraseonlaunchrule>
     <AsfFrameworkConfig>
       <framework-data>
   <options>
@@ -325,6 +325,20 @@
   <board id="board.sam4s_ek2" value="Add" config="" content-id="Atmel.ASF" />
 </framework-data>
     </AsfFrameworkConfig>
+    <avrtool>com.atmel.avrdbg.tool.samice</avrtool>
+    <avrtoolinterface>SWD</avrtoolinterface>
+    <com_atmel_avrdbg_tool_samice>
+      <ToolOptions>
+        <InterfaceProperties>
+          <JtagEnableExtResetOnStartSession>false</JtagEnableExtResetOnStartSession>
+          <SwdClock>499400</SwdClock>
+        </InterfaceProperties>
+        <InterfaceName>SWD</InterfaceName>
+      </ToolOptions>
+      <ToolType>com.atmel.avrdbg.tool.samice</ToolType>
+      <ToolNumber>58001139</ToolNumber>
+      <ToolName>J-Link</ToolName>
+    </com_atmel_avrdbg_tool_samice>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -385,6 +399,9 @@
       <Value>../src/ASF/sam/components/display/ili9325</Value>
       <Value>../src/ASF/sam/drivers/ebi/smc</Value>
       <Value>../src/ASF/sam/components/display/ili93xx</Value>
+      <Value>../src/ASF/sam/drivers/matrix</Value>
+      <Value>../src/ASF/common/components/memory/nand_flash/nand_flash_ebi</Value>
+      <Value>../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/ftl_lib</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize for size (-Os)</armgcc.compiler.optimization.level>
@@ -406,11 +423,6 @@
   </armgcc.linker.libraries.LibrarySearchPaths>
   <armgcc.linker.optimization.GarbageCollectUnusedSections>True</armgcc.linker.optimization.GarbageCollectUnusedSections>
   <armgcc.linker.miscellaneous.LinkerFlags>-Wl,--entry=Reset_Handler -Wl,--cref -mthumb -T../src/ASF/sam/utils/linker_scripts/sam4s/sam4sd32/gcc/flash.ld</armgcc.linker.miscellaneous.LinkerFlags>
-  <armgcc.assembler.general.IncludePaths>
-    <ListValues>
-      <Value>../src/ASF/sam/components/display/ili93xx</Value>
-    </ListValues>
-  </armgcc.assembler.general.IncludePaths>
   <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM4=true -DBOARD=SAM4S_EK2 -DSD_MMC_ENABLE -D__SAM4SD32C__ -Dprintf=iprintf -Dscanf=iscanf</armgcc.preprocessingassembler.general.AssemblerFlags>
   <armgcc.preprocessingassembler.general.DefaultIncludePath>False</armgcc.preprocessingassembler.general.DefaultIncludePath>
   <armgcc.preprocessingassembler.general.IncludePaths>
@@ -452,6 +464,9 @@
       <Value>../src/ASF/sam/components/display/ili9325</Value>
       <Value>../src/ASF/sam/drivers/ebi/smc</Value>
       <Value>../src/ASF/sam/components/display/ili93xx</Value>
+      <Value>../src/ASF/sam/drivers/matrix</Value>
+      <Value>../src/ASF/common/components/memory/nand_flash/nand_flash_ebi</Value>
+      <Value>../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/ftl_lib</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
 </ArmGcc>
@@ -516,6 +531,9 @@
       <Value>../src/ASF/sam/components/display/ili9325</Value>
       <Value>../src/ASF/sam/drivers/ebi/smc</Value>
       <Value>../src/ASF/sam/components/display/ili93xx</Value>
+      <Value>../src/ASF/sam/drivers/matrix</Value>
+      <Value>../src/ASF/common/components/memory/nand_flash/nand_flash_ebi</Value>
+      <Value>../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/ftl_lib</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
@@ -538,11 +556,6 @@
   </armgcc.linker.libraries.LibrarySearchPaths>
   <armgcc.linker.optimization.GarbageCollectUnusedSections>True</armgcc.linker.optimization.GarbageCollectUnusedSections>
   <armgcc.linker.miscellaneous.LinkerFlags>-Wl,--entry=Reset_Handler -Wl,--cref -mthumb -T../src/ASF/sam/utils/linker_scripts/sam4s/sam4sd32/gcc/flash.ld</armgcc.linker.miscellaneous.LinkerFlags>
-  <armgcc.assembler.general.IncludePaths>
-    <ListValues>
-      <Value>../src/ASF/sam/components/display/ili93xx</Value>
-    </ListValues>
-  </armgcc.assembler.general.IncludePaths>
   <armgcc.assembler.debugging.DebugLevel>Default (-g)</armgcc.assembler.debugging.DebugLevel>
   <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM4=true -DBOARD=SAM4S_EK2 -DSD_MMC_ENABLE -D__SAM4SD32C__ -Dprintf=iprintf -Dscanf=iscanf</armgcc.preprocessingassembler.general.AssemblerFlags>
   <armgcc.preprocessingassembler.general.DefaultIncludePath>False</armgcc.preprocessingassembler.general.DefaultIncludePath>
@@ -585,6 +598,9 @@
       <Value>../src/ASF/sam/components/display/ili9325</Value>
       <Value>../src/ASF/sam/drivers/ebi/smc</Value>
       <Value>../src/ASF/sam/components/display/ili93xx</Value>
+      <Value>../src/ASF/sam/drivers/matrix</Value>
+      <Value>../src/ASF/common/components/memory/nand_flash/nand_flash_ebi</Value>
+      <Value>../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/ftl_lib</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
   <armgcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcc.preprocessingassembler.debugging.DebugLevel>
